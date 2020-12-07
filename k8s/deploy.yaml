@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: numbergeneratorrest
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: numbergeneratorrest
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: numbergeneratorrest
+  name: numbergeneratorrest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: numbergeneratorrest
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: numbergeneratorrest
+    spec:
+      containers:
+      - image: vinodkottem/simplerestapiapp:v1
+        name: simplerestapiapp
+        ports:
+        - containerPort: 8080
+        resources: {}
+status: {}
